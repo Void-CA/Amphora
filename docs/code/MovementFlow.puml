@@ -1,0 +1,19 @@
+@startuml
+start
+:Iniciar Movimiento;
+if (Tipo Movimiento?) then (Entrada)
+  :Registrar Compra/Devolucion;
+  :Actualizar Stock +;
+else (Salida)
+  :Verificar Stock Suficiente;
+  if (Stock OK?) then (Sí)
+    :Registrar Venta/Consumo;
+    :Actualizar Stock -;
+  else (No)
+    :Notificar Stock Insuficiente;
+    stop
+  endif
+endif
+:Generar Comprobante;
+stop
+@enduml

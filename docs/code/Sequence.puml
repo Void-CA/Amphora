@@ -1,0 +1,21 @@
+@startuml
+actor Usuario
+participant "Interfaz Web" as UI
+participant "Controlador" as Controller
+participant "Servicio Inventario" as Service
+participant "Base Datos" as DB
+
+Usuario -> UI: Ingresar datos movimiento
+UI -> Controller: POST /movimientos
+Controller -> Service: validarMovimiento()
+Service -> DB: verificarProducto()
+DB --> Service: datos producto
+Service -> Controller: validación OK
+Controller -> Service: registrarMovimiento()
+Service -> DB: insertar movimiento
+Service -> DB: actualizar stock
+DB --> Service: éxito
+Service --> Controller: movimiento registrado
+Controller --> UI: confirmación
+UI --> Usuario: movimiento exitoso
+@enduml

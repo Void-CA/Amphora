@@ -1,0 +1,67 @@
+@startuml
+skinparam componentStyle rectangle
+skinparam packageStyle rectangle
+skinparam shadowing false
+hide circle
+
+package "Frontend Components" {
+  package "Gestión de Productos" {
+    [ProductManager] as comp_prod
+    [ProductForm] as form_prod
+    [ProductList] as list_prod
+  }
+
+  package "Gestión de Movimientos" {
+    [MovementManager] as comp_mov
+    [MovementForm] as form_mov
+    [MovementHistory] as hist_mov
+  }
+
+  package "Reportes" {
+    [ReportManager] as comp_rep
+    [StockReport] as stock_rep
+    [FinancialReport] as financial_rep
+  }
+
+  package "FIFO y Costeo" {
+    [FIFOProcessor] as comp_fifo
+    [CostCalculator] as cost_calc
+    [LotTracker] as lot_track
+  }
+}
+
+package "Backend Services" {
+  [Database Service] as db_service
+  [FIFO Service] as fifo_service
+  [Report Service] as report_service
+}
+
+package "Data Storage" {
+  [SQLite Database] as sqlite
+  [Drizzle Schema] as drizzle
+}
+
+' Relaciones Frontend -> Backend
+form_prod --> db_service : createProduct
+form_mov --> fifo_service : processMovement
+stock_rep --> report_service : generateReport
+financial_rep --> report_service : generateFinancialReport
+
+' Relaciones Backend
+fifo_service --> db_service : getLots
+db_service --> drizzle : query
+drizzle --> sqlite : execute
+
+note right of comp_fifo
+  Implementa PEPS:
+  - Seguimiento por lotes
+  - Costeo FIFO
+  - Valorización inventario
+end note
+
+note left of db_service
+  Drizzle ORM con SQLite
+  Transacciones ACID
+  Migraciones automáticas
+end note
+@enduml

@@ -1,0 +1,93 @@
+@startuml
+hide methods
+hide circle
+
+entity Producto {
+  * ID_Producto : INT <<PK>>
+  --
+  Codigo_Barras : STR
+  Descripcion : STR <<NN>>
+  Categoria : STR
+  Subcategoria : STR
+  U_Medida : STR <<NN>>
+  Saldo_Actual : DEC
+  Stock_Min : DEC
+  Stock_Max : DEC
+  Estado : STR
+}
+
+entity Proveedor {
+  * ID_Proveedor : INT <<PK>>
+  --
+  RUC_CI : STR <<NN>>
+  Nombre : STR <<NN>>
+  Contacto : STR
+  Telefono : STR
+  Email : STR
+  Estado : STR
+}
+
+entity Movimiento {
+  * ID_Movimiento : INT <<PK>>
+  --
+  Fecha : DATE <<NN>>
+  Hora : TIME <<NN>>
+  Tipo : STR <<NN>>
+  Doc_Ref : STR
+  * ID_Producto : INT <<FK>>
+  * ID_Proveedor : INT <<FK>>
+  * ID_Usuario : INT <<FK>>
+  Cantidad : DEC <<NN>>
+  Precio_Unit : DEC
+  Monto_Total : DEC
+  Lote : STR
+  Fecha_Venc : DATE
+  Obs : TEXT
+}
+
+entity Usuario {
+  * ID_Usuario : INT <<PK>>
+  --
+  Username : STR <<NN>>
+  Nombre : STR <<NN>>
+  Rol : STR <<NN>>
+  Estado : STR
+}
+
+entity Almacen {
+  * ID_Almacen : INT <<PK>>
+  --
+  Nombre : STR <<NN>>
+  Ubicacion : STR
+  Responsable : STR
+}
+
+entity Stock_Almacen {
+  * ID_Stock : INT <<PK>>
+  --
+  * ID_Producto : INT <<FK>>
+  * ID_Almacen : INT <<FK>>
+  Stock_Actual : DEC <<NN>>
+}
+
+enum Entrada {
+    Compra
+    Devolucion
+    Ajuste+
+}
+
+enum Salida {
+    Venta
+    Consumo
+    Transferencia
+    Ajuste-
+}
+
+' Relaciones
+Producto ||--o{ Movimiento
+Proveedor ||--o{ Movimiento
+Usuario ||--o{ Movimiento
+Producto ||--o{ Stock_Almacen
+Almacen ||--o{ Stock_Almacen
+
+@enduml

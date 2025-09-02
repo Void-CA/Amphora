@@ -1,0 +1,44 @@
+@startuml
+skinparam nodesep 40
+skinparam ranksep 40
+
+package "Frontend (Vite + React)" {
+  [Componentes React] as react
+  [Tailwind CSS] as tailwind
+  [Estado: Zustand] as zustand
+}
+
+package "Backend Tauri (Rust)" {
+  [Tauri Core] as tauri
+  [Commands Rust] as commands
+  [SQLite] as sqlite
+}
+
+package "Base de Datos" {
+  [Drizzle ORM] as drizzle
+  [Tabla Productos] as products
+  [Tabla Movimientos] as moves
+  [Tabla Lotes] as lots
+}
+
+package "Business Logic" {
+  [Gestion PEPS] as peps
+  [Calculo Costos] as costos
+  [Generador Reportes] as reports
+}
+
+react --> tauri : Invoke Commands
+tauri --> commands : Rust Functions
+commands --> drizzle : Database Operations
+drizzle --> sqlite : SQLite Queries
+
+commands --> peps : FIFO Logic
+commands --> costos : Cost Calculations
+commands --> reports : Generate Reports
+
+note right of tauri
+  Aplicacion Desktop
+  Single-user local
+  Sistema PEPS integrado
+end note
+@enduml
