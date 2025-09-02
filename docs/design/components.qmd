@@ -1,0 +1,16 @@
+# Estructura de Componentes
+
+## Capa Frontend (React)
+- `ProductManager/` - Gestión de productos
+- `MovementManager/` - Movimientos de inventario  
+- `ReportManager/` - Generación de reportes
+- `FIFOProcessor/` - Cálculos PEPS
+
+## Capa Backend (Tauri Commands)
+- `database_service/` - Operaciones de base de datos
+- `fifo_service/` - Lógica de negocio PEPS
+- `report_service/` - Generación de reportes
+
+## Capa Persistencia
+- `Drizzle Schema/` - Definición de modelos
+- `SQLite/` - Almacenamiento local

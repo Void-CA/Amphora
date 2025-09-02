@@ -1,0 +1,230 @@
+---
+title: "Especificación de Requisitos de Software - Amphora Inventory"
+author: "Equipo de Desarrollo"
+date: "2025-09-02"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+---
+
+# Especificación de Requisitos de Software
+
+## 1. Introducción
+
+### 1.1 Propósito del Documento
+Este documento describe los requisitos funcionales y no funcionales del sistema de inventario Amphora, una aplicación desktop para gestión detallada de inventarios con sistema de costeo PEPS (Primeras Entradas, Primeras Salidas).
+
+### 1.2 Alcance del Sistema
+Sistema de inventario local para gestión completa de stock con:
+- Control de movimientos y existencias
+- Sistema de costeo PEPS (FIFO)
+- Reportes financieros y de inventario
+- Interfaz desktop nativa multiplataforma
+
+### 1.3 Stack Tecnológico
+```yaml
+frontend: 
+  - React 18 + TypeScript
+  - Vite
+  - Tailwind CSS
+  - Zustand (gestión de estado)
+
+backend:
+  - Tauri (Rust)
+  - Drizzle ORM
+  - SQLite
+
+caracteristicas:
+  - Aplicación desktop nativa
+  - Base de datos local
+  - Single-user
+  - Offline-first
+
+2. Descripción General
+2.1 Perspectiva del Producto
+Aplicación desktop independiente que no requiere conexión a internet, diseñada para pequeñas y medianas empresas que necesitan control detallado de inventarios con costeo preciso.
+
+2.2 Funcionalidades Principales
+Gestión de Productos: Crear/editar productos, gestión de categorías, control de stocks
+
+Movimientos de Inventario: Entradas (compras), salidas (ventas), ajustes de inventario
+
+Sistema PEPS FIFO: Seguimiento por lotes, costeo automático, valorización PEPS
+
+Reportes y Análisis: Reporte de stock, reporte financiero, historial de movimientos
+
+3. Requisitos Funcionales
+3.1 Gestión de Productos (RF01)
+RF01.1 - Creación de Productos
+
+Descripción: El sistema debe permitir registrar nuevos productos con información completa
+
+Prioridad: Alta
+
+Criterios Aceptación:
+
+Campos obligatorios: código, descripción, unidad medida
+
+Campos opcionales: categoría, stock mínimo/máximo
+
+Validación de código único
+
+RF01.2 - Edición de Productos
+
+Descripción: Modificación de información de productos existentes
+
+Prioridad: Media
+
+3.2 Gestión de Movimientos (RF02)
+RF02.1 - Registro de Entradas
+
+Descripción: Registrar compras y entradas al inventario
+
+Prioridad: Alta
+
+Datos Requeridos:
+
+typescript
+interface Entrada {
+  producto_id: number;
+  lote: string;
+  cantidad: number;
+  costo_unitario: number;
+  fecha_entrada: Date;
+  fecha_vencimiento?: Date;
+}
+RF02.2 - Registro de Salidas
+
+Descripción: Procesar salidas con aplicación automática de PEPS
+
+Prioridad: Alta
+
+Proceso PEPS:
+
+Identificar lotes más antiguos
+
+Aplicar costos FIFO automáticamente
+
+Actualizar existencias por lote
+
+3.3 Sistema PEPS (RF03)
+RF03.1 - Seguimiento por Lotes
+
+Descripción: Mantener control individual por lotes de productos
+
+Prioridad: Crítica
+
+RF03.2 - Cálculo Costos FIFO
+
+Descripción: Calcular automáticamente costos de salida
+
+Algoritmo:
+
+rust
+fn calcular_costo_fifo(producto_id, cantidad_salida) -> Result<f64> {
+    // Obtener lotes ordenados por fecha
+    // Aplicar FIFO hasta cubrir cantidad
+    // Retornar costo total
+}
+3.4 Reportes (RF04)
+RF04.1 - Reporte de Stock Actual
+
+Descripción: Reporte de existencias valorizadas
+
+Campos: Producto, Cantidad, Costo Unitario, Valor Total
+
+RF04.2 - Reporte Movimientos
+
+Descripción: Historial completo de movimientos
+
+Filtros: Por fecha, producto, tipo movimiento
+
+4. Requisitos No Funcionales
+4.1 Rendimiento
+Métrica	Valor Objetivo
+Tiempo respuesta	< 100ms
+Carga inicial	< 3 segundos
+Procesamiento PEPS	< 50ms
+4.2 Usabilidad
+Interfaz intuitiva en español
+
+Atajos de teclado para operaciones frecuentes
+
+Validaciones en tiempo real
+
+4.3 Confiabilidad
+Backup automático de base de datos
+
+Transacciones ACID para movimientos
+
+Recovery ante cierres inesperados
+
+4.4 Seguridad
+Validación de datos de entrada
+
+Prevención de inyección SQL
+
+Sanitización de inputs
+
+5. Esquema de Base de Datos
+5.1 Modelo Principal
+sql
+-- Tabla Productos
+CREATE TABLE productos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    codigo TEXT UNIQUE NOT NULL,
+    descripcion TEXT NOT NULL,
+    unidad_medida TEXT NOT NULL,
+    stock_minimo DECIMAL(15, 3),
+    stock_maximo DECIMAL(15, 3),
+    activo BOOLEAN DEFAULT true
+);
+
+-- Tabla Lotes (PEPS)
+CREATE TABLE lotes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    producto_id INTEGER NOT NULL,
+    numero_lote TEXT NOT NULL,
+    cantidad_inicial DECIMAL(15, 3) NOT NULL,
+    cantidad_actual DECIMAL(15, 3) NOT NULL,
+    costo_unitario DECIMAL(15, 2) NOT NULL,
+    fecha_entrada DATE NOT NULL,
+    fecha_vencimiento DATE,
+    FOREIGN KEY (producto_id) REFERENCES productos(id)
+);
+
+-- Tabla Movimientos
+CREATE TABLE movimientos (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    tipo TEXT NOT NULL, -- 'entrada'/'salida'
+    producto_id INTEGER NOT NULL,
+    lote_id INTEGER NOT NULL,
+    cantidad DECIMAL(15, 3) NOT NULL,
+    costo_unitario DECIMAL(15, 2) NOT NULL,
+    monto_total DECIMAL(15, 2) NOT NULL,
+    fecha DATE NOT NULL,
+    documento_ref TEXT,
+    observaciones TEXT,
+    FOREIGN KEY (producto_id) REFERENCES productos(id),
+    FOREIGN KEY (lote_id) REFERENCES lotes(id)
+);
+5.2 Relaciones de Base de Datos
+PRODUCTOS → LOTES (uno a muchos)
+
+PRODUCTOS → MOVIMIENTOS (uno a muchos)
+
+LOTES → MOVIMIENTOS (uno a muchos)
+
+6. Interfaz de Usuario
+6.1 Principales Pantallas
+Dashboard: Resumen de inventario y alertas
+
+Productos: Lista y formulario de productos
+
+Movimientos: Registro de entradas/salidas
+
+Reportes: Generación y visualización de reportes
+
