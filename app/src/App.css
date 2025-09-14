@@ -1,1 +1,146 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Delius+Swash+Caps&display=swap");
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --font-logo: "DM Serif Display", serif
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* Fondo y textos */
+  --background: oklch(96.464% 0.0097 273.338);        /* claro, azul muy suave */
+  --foreground: oklch(20% 0.02 250);        /* texto principal oscuro */
+
+  --card: oklch(100% 0.01 250);
+  --card-foreground: oklch(20% 0.02 250);
+  --popover: oklch(100% 0.01 250);
+  --popover-foreground: oklch(20% 0.02 250);
+
+  /* Colores de marca */
+  --primary: oklch(25.898% 0.07092 248.711);           /* azul logo */
+  --primary-foreground: oklch(100% 0 0);   /* texto blanco sobre azul */
+  --secondary: oklch(90% 0.05 50);         /* amarillo / dorado suave */
+  --secondary-foreground: oklch(20% 0.02 250);
+
+  /* Estados y acentos */
+  --muted: oklch(95% 0.02 250);
+  --muted-foreground: oklch(40% 0.01 250);
+  --accent: oklch(93.872% 0.0483 80.298);             /* acento amarillo */
+  --accent-foreground: oklch(10% 0 60);
+  --destructive: oklch(57% 0.25 27);       /* rojo para errores */
+
+  /* Bordes, inputs y anillos */
+  --border: oklch(90% 0.02 250);
+  --input: oklch(92% 0.02 250);
+  --ring: oklch(70% 0.02 240);
+
+  /* Sidebar y charts */
+  --sidebar: oklch(100% 0.01 250);
+  --sidebar-foreground: oklch(20% 0.02 250);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+
+  /* Charts ejemplo */
+  --chart-1: oklch(64% 0.22 41);
+  --chart-2: oklch(60% 0.12 185);
+  --chart-3: oklch(40% 0.07 227);
+  --chart-4: oklch(82% 0.18 84);
+  --chart-5: oklch(77% 0.19 70);
+}
+
+.dark {
+  --background: oklch(20.938% 0.00416 84.559);        /* azul oscuro */
+  --foreground: oklch(98% 0.02 0);         /* texto blanco */
+  
+  --card: oklch(20% 0.03 250);
+  --card-foreground: oklch(98% 0.02 0);
+  --popover: oklch(20% 0.03 250);
+  --popover-foreground: oklch(98% 0.02 0);
+
+  --primary: oklch(30% 0.18 210);           /* azul más brillante en dark */
+  --primary-foreground: oklch(98% 0 0);    /* texto blanco */
+  --secondary: oklch(91.55% 0.05828 65.279);         /* amarillo suave */
+  --secondary-foreground: oklch(20% 0.02 250);
+
+  --muted: oklch(25% 0.02 250);
+  --muted-foreground: oklch(70% 0.01 250);
+  --accent: oklch(28.074% 0.0263 58.963);
+  --accent-foreground: oklch(98% 0 0);
+  --destructive: oklch(70% 0.25 27);
+
+  --border: oklch(25% 0.02 250 / 10%);
+  --input: oklch(20% 0.02 250 / 15%);
+  --ring: oklch(55% 0 0);
+
+  --sidebar: oklch(20% 0.03 250);
+  --sidebar-foreground: oklch(98% 0.02 0);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

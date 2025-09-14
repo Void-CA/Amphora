@@ -5,7 +5,6 @@ hide circle
 entity Producto {
   * ID_Producto : INT <<PK>>
   --
-  Codigo_Barras : STR
   Descripcion : STR <<NN>>
   Categoria : STR
   Subcategoria : STR
@@ -50,8 +49,6 @@ entity Usuario {
   --
   Username : STR <<NN>>
   Nombre : STR <<NN>>
-  Rol : STR <<NN>>
-  Estado : STR
 }
 
 entity Almacen {
