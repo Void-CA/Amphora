@@ -1,13 +1,20 @@
 import { useState } from "react";
-import { EntityTable } from "../components/EntityTable";
-import { EntityForm } from "../components/EntityForm";
+import { 
+  EntityTable, 
+  EntityForm, 
+  InventoryStats,
+  QuickActions,
+  InventoryAlerts,
+  InventoryInsights,
+  RecentActivity,
+  HelpCenter
+} from "../components";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "../components/ui/dialog";
-import { FiPackage, FiTruck, FiAlertTriangle, FiTrendingUp } from "react-icons/fi";
 import { useInventory } from "../hooks/useInventory";
 import { useDynamicOptions } from "../hooks/useDynamicOptions";
 import { productFields, productColumns } from "../config/productConfig";
@@ -66,84 +73,48 @@ export default function InventoryDashboard() {
     }
   };
 
+  // Handlers for new components
+  const handleViewReports = () => {
+    alert('Funcionalidad de reportes próximamente disponible');
+  };
+
+  const handleCheckLowStock = () => {
+    if (stats.lowStockProducts > 0) {
+      // Scroll to products table and potentially filter by low stock
+      const productsTable = document.querySelector('[data-testid="products-table"]');
+      if (productsTable) {
+        productsTable.scrollIntoView({ behavior: 'smooth' });
+      }
+      alert(`Hay ${stats.lowStockProducts} producto${stats.lowStockProducts > 1 ? 's' : ''} con stock bajo que necesita${stats.lowStockProducts > 1 ? 'n' : ''} atención.`);
+    } else {
+      alert('¡Excelente! Todos los productos tienen stock adecuado.');
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-6">
       <div className="max-w-7xl mx-auto space-y-8">
-        {/* Header */}
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Dashboard de Inventario
-          </h1>
-          <p className="text-gray-600">
-            Gestiona tu inventario de manera eficiente y organizada
-          </p>
-        </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Total Productos</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.totalProducts}</p>
-              </div>
-              <div className="h-12 w-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <FiPackage className="h-6 w-6 text-blue-600" />
-              </div>
-            </div>
-          </div>
+        <InventoryStats stats={stats} />
 
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Productos Activos</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.activeProducts}</p>
-              </div>
-              <div className="h-12 w-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <FiTrendingUp className="h-6 w-6 text-green-600" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Stock Bajo</p>
-                <p className="text-2xl font-bold text-red-600">{stats.lowStockProducts}</p>
-              </div>
-              <div className="h-12 w-12 bg-red-100 rounded-lg flex items-center justify-center">
-                <FiAlertTriangle className="h-6 w-6 text-red-600" />
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl shadow-sm border p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">Unidades Totales</p>
-                <p className="text-2xl font-bold text-gray-900">{stats.totalStockValue.toLocaleString()}</p>
-              </div>
-              <div className="h-12 w-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                <FiTruck className="h-6 w-6 text-purple-600" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Products Table */}
-        <EntityTable
-          data={products}
-          columns={productColumns}
-          loading={loading}
-          onEdit={handleEditProduct}
-          onDelete={handleDeleteProduct}
-          onAdd={handleAddProduct}
-          title="Productos"
-          addLabel="Agregar Producto"
-          pageSize={10}
-          enableSearch={true}
-          enableColumnToggle={true}
+        {/* Quick Actions */}
+        <QuickActions 
+          onAddProduct={handleAddProduct}
+          onViewReports={handleViewReports}
+          onCheckLowStock={handleCheckLowStock}
         />
+
+        {/* Two Column Layout for Alerts and Insights */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <InventoryAlerts stats={stats} />
+          <InventoryInsights stats={stats} />
+        </div>
+
+        {/* Bottom Section with Activity and Help */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <RecentActivity stats={stats} />
+          <HelpCenter />
+        </div>
 
         {/* Product Form Dialog */}
         <Dialog open={showProductForm} onOpenChange={setShowProductForm}>

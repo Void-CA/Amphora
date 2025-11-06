@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE factura SET\n            numero = COALESCE(?, numero),\n            fecha = COALESCE(?, fecha),\n            id_proveedor = COALESCE(?, id_proveedor),\n            total = COALESCE(?, total),\n            estado = COALESCE(?, estado)\n         WHERE id_factura = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 6
+    },
+    "nullable": []
+  },
+  "hash": "5c1fd9ce409d80f50ce50cfe36314e8875999717235527afedec76e2ce3922d1"
+}

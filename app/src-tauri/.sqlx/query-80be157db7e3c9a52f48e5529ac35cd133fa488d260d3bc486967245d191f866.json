@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "INSERT INTO proveedor (ruc_ci, nombre, contacto, telefono, email, estado) \n         VALUES (?, ?, ?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 6
+    },
+    "nullable": []
+  },
+  "hash": "80be157db7e3c9a52f48e5529ac35cd133fa488d260d3bc486967245d191f866"
+}

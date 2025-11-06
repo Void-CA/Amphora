@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE producto SET\n            codigo_interno = COALESCE(?, codigo_interno),\n            descripcion = COALESCE(?, descripcion),\n            categoria = COALESCE(?, categoria),\n            subcategoria = COALESCE(?, subcategoria),\n            estado = COALESCE(?, estado)\n         WHERE id_producto = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 6
+    },
+    "nullable": []
+  },
+  "hash": "bec71ab73c3bc00d708ba1464b1005d97944e54b6c6f7857c40b1aa13e06691c"
+}

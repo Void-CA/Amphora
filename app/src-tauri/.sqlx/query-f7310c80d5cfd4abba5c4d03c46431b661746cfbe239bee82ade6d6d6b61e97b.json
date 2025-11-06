@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "DELETE FROM factura WHERE id_factura = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "f7310c80d5cfd4abba5c4d03c46431b661746cfbe239bee82ade6d6d6b61e97b"
+}

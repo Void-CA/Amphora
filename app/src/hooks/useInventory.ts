@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { invoke } from '@tauri-apps/api/core';
 import type { Product } from '../types';
 
 export interface InventoryStats {
@@ -33,12 +34,8 @@ export function useInventory(): UseInventoryReturn {
   const loadProducts = useCallback(async () => {
     try {
       setLoading(true);
-      // TODO: Replace with actual API call or Tauri command
-      // const products = await invoke('get_products');
-      // setProducts(products);
-      
-      // For now, start with empty array until real data integration
-      setProducts([]);
+      const products = await invoke<Product[]>('get_products');
+      setProducts(products);
     } catch (error) {
       console.error('Error loading products:', error);
       throw error;
@@ -49,14 +46,7 @@ export function useInventory(): UseInventoryReturn {
 
   const addProduct = useCallback(async (productData: Omit<Product, 'id'>) => {
     try {
-      // TODO: Replace with actual API call or Tauri command
-      // const newProduct = await invoke('create_product', productData);
-      
-      // For now, create with temporary ID
-      const newProduct: Product = { 
-        id: Date.now(), // Temporary ID generation
-        ...productData 
-      };
+      const newProduct = await invoke<Product>('create_product', productData);
       setProducts(prev => [...prev, newProduct]);
     } catch (error) {
       console.error('Error adding product:', error);
@@ -66,10 +56,7 @@ export function useInventory(): UseInventoryReturn {
 
   const updateProduct = useCallback(async (id: number, productData: Partial<Product>) => {
     try {
-      // TODO: Replace with actual API call or Tauri command
-      // const updatedProduct = await invoke('update_product', { id, ...productData });
-      
-      // For now, update local state
+      await invoke('update_product', { id, ...productData });
       setProducts(prev => prev.map(p => p.id === id ? { ...p, ...productData } : p));
     } catch (error) {
       console.error('Error updating product:', error);
@@ -79,10 +66,7 @@ export function useInventory(): UseInventoryReturn {
 
   const deleteProduct = useCallback(async (id: number) => {
     try {
-      // TODO: Replace with actual API call or Tauri command
-      // await invoke('delete_product', { id });
-      
-      // For now, update local state
+      await invoke('delete_product', { id });
       setProducts(prev => prev.filter(p => p.id !== id));
     } catch (error) {
       console.error('Error deleting product:', error);

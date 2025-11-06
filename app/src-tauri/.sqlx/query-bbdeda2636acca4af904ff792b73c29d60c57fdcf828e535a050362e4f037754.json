@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE almacen SET\n            nombre = COALESCE(?, nombre),\n            ubicacion = COALESCE(?, ubicacion),\n            responsable = COALESCE(?, responsable)\n         WHERE id_almacen = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 4
+    },
+    "nullable": []
+  },
+  "hash": "bbdeda2636acca4af904ff792b73c29d60c57fdcf828e535a050362e4f037754"
+}

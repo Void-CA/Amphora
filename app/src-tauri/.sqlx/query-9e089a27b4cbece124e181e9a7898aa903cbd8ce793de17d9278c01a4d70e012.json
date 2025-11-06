@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE movimiento SET\n            fecha = COALESCE(?, fecha),\n            tipo = COALESCE(?, tipo),\n            subtipo = COALESCE(?, subtipo),\n            id_prod_prov = COALESCE(?, id_prod_prov),\n            id_presentacion = COALESCE(?, id_presentacion),\n            cantidad = COALESCE(?, cantidad),\n            precio_unit = COALESCE(?, precio_unit),\n            monto_total = COALESCE(?, monto_total),\n            lote = COALESCE(?, lote),\n            fecha_venc = COALESCE(?, fecha_venc),\n            obs = COALESCE(?, obs),\n            id_factura = COALESCE(?, id_factura)\n         WHERE id_movimiento = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 13
+    },
+    "nullable": []
+  },
+  "hash": "9e089a27b4cbece124e181e9a7898aa903cbd8ce793de17d9278c01a4d70e012"
+}

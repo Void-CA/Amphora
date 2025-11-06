@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "DELETE FROM movimiento WHERE id_movimiento = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "6be4006ff823f9f072215c8a546d626253c969467d55d597239d799884d967a1"
+}

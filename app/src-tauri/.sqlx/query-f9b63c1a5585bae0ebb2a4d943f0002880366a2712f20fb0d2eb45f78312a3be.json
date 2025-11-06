@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "INSERT INTO almacen (nombre, ubicacion, responsable) VALUES (?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 3
+    },
+    "nullable": []
+  },
+  "hash": "f9b63c1a5585bae0ebb2a4d943f0002880366a2712f20fb0d2eb45f78312a3be"
+}

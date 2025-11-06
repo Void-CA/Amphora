@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "INSERT INTO producto (codigo_interno, descripcion, categoria, subcategoria, estado) \n         VALUES (?, ?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "c8e7544b9aa9ac16a5be6ad2c0acccea9096c14f0d8aec0bf83d5a6b80ee9987"
+}

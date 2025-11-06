@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "DELETE FROM almacen WHERE id_almacen = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "fa1ec54c1526ca1b8f19b73eefce088898af87590e2968ea3faa495a41e1733e"
+}

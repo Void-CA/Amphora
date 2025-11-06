@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "INSERT INTO factura (numero, fecha, id_proveedor, total, estado)\n         VALUES (?, ?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "97d6ca194e2a43bc58959d4bbb19a7d97a3b44f2402952bfc906f39c6b8b8dda"
+}

@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE proveedor SET\n            ruc_ci = COALESCE(?, ruc_ci),\n            nombre = COALESCE(?, nombre),\n            contacto = COALESCE(?, contacto),\n            telefono = COALESCE(?, telefono),\n            email = COALESCE(?, email),\n            estado = COALESCE(?, estado)\n         WHERE id_proveedor = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 7
+    },
+    "nullable": []
+  },
+  "hash": "7d83d62b7913e1af8a720d7ad208d671c8bbbe702641f7a77f3376765b2e8ab1"
+}

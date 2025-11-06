@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE stock_almacen SET\n            id_prod_prov = COALESCE(?, id_prod_prov),\n            id_presentacion = COALESCE(?, id_presentacion),\n            id_almacen = COALESCE(?, id_almacen),\n            stock_actual = COALESCE(?, stock_actual)\n         WHERE id_stock = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "0e776e778644bf3c250121b8ad3ba037e699e7bd0c3a654a97181fdd8ba5a098"
+}

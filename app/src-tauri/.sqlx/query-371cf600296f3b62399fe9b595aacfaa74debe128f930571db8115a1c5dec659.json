@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "UPDATE producto_proveedor SET\n            id_producto = COALESCE(?, id_producto),\n            id_proveedor = COALESCE(?, id_proveedor),\n            codigo_proveedor = COALESCE(?, codigo_proveedor),\n            estado = COALESCE(?, estado)\n         WHERE id_prod_prov = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "371cf600296f3b62399fe9b595aacfaa74debe128f930571db8115a1c5dec659"
+}

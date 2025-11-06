@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "DELETE FROM proveedor WHERE id_proveedor = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "aa169cf17b1240fabd6ad84e8d34d18fc2cc7e30e11fe4d4201e8ca70790a627"
+}

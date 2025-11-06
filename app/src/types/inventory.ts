@@ -1,68 +1,76 @@
-// Inventory-related types based on database schema
 
 export interface Product {
-  id: number;
-  description: string;
-  category: string;
-  subcategory: string;
-  unit: string;
-  currentStock: number;
-  minStock: number;
-  maxStock: number;
-  status: string;
+  id_producto: number;
+  codigo_interno: string;
+  descripcion: string;
+  categoria?: string | null;
+  subcategoria?: string | null;
+  estado?: string | null;
 }
 
 export interface Supplier {
-  id: number;
-  taxId: string; // RUC/CI
-  name: string;
-  contact: string;
-  phone: string;
-  email: string;
-  status: string;
+  id: number; // id_proveedor
+  name: string; // nombre
+  contact?: string | null; // contacto
+  status?: string | null; // estado
 }
 
-export interface User {
-  id: number;
-  username: string;
-  name: string;
+export interface ProductSupplier {
+  id: number; // id_prod_prov
+  productId: number; // id_producto
+  supplierId: number; // id_proveedor
+  supplierCode: string; // codigo_proveedor
+  status?: string | null; // estado
+}
+
+export interface Presentation {
+  id: number; // id_presentacion
+  productId: number; // id_producto
+  unit: string; // unidad
+  quantity: number; // cantidad (REAL)
+  description?: string | null; // descripcion
+}
+
+export interface Invoice {
+  id: number; // id_factura
+  number: string; // numero
+  date: string; // fecha
+  supplierId: number; // id_proveedor
+  total?: number | null;
+  status?: string | null; // estado
 }
 
 export interface Warehouse {
-  id: number;
-  name: string;
-  location: string;
-  manager: string;
+  id: number; // id_almacen
+  name: string; // nombre
+  location?: string | null; // ubicacion
+  manager?: string | null; // responsable
+}
+
+export interface Movement {
+  id: number; // id_movimiento
+  date: string; // fecha
+  type: string; // tipo
+  subtype?: string | null; // subtipo
+  productSupplierId: number; // id_prod_prov
+  presentationId: number; // id_presentacion
+  quantity: number; // cantidad
+  unitPrice?: number | null; // precio_unit
+  totalAmount?: number | null; // monto_total
+  batch?: string | null; // lote
+  expiryDate?: string | null; // fecha_venc
+  notes?: string | null; // obs
+  invoiceId?: number | null; // id_factura
 }
 
 export interface WarehouseStock {
-  id: number;
-  productId: number;
-  warehouseId: number;
-  currentStock: number;
+  id: number; // id_stock
+  productSupplierId: number; // id_prod_prov
+  presentationId: number; // id_presentacion
+  warehouseId: number; // id_almacen
+  currentStock: number; // stock_actual
 }
 
-// Movement types based on schema enums
-export type EntryType = "Purchase" | "Return" | "Adjustment+";
-export type ExitType = "Sale" | "Consumption" | "Transfer" | "Adjustment-";
-export type MovementType = EntryType | ExitType;
-
-export interface Movement {
-  id: number;
-  date: string; // ISO string
-  time: string; // HH:mm:ss
-  type: MovementType;
-  docRef?: string;
-  productId: number;
-  supplierId: number;
-  userId: number;
-  quantity: number;
-  unitPrice?: number;
-  totalAmount?: number;
-  batch?: string;
-  expiryDate?: string;
-  notes?: string;
-}
 
 // Form field definition type
 export interface FormField {

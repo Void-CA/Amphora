@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "INSERT INTO movimiento (fecha, tipo, subtipo, id_prod_prov, id_presentacion, cantidad, \n                                 precio_unit, monto_total, lote, fecha_venc, obs, id_factura) \n         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 12
+    },
+    "nullable": []
+  },
+  "hash": "83171785f5d4e17ffbd77851d3f38fb6a734e8dd5c06b725413fdfa2c117132e"
+}

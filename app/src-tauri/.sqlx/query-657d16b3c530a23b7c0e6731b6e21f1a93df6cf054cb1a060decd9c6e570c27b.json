@@ -1,0 +1,12 @@
+{
+  "db_name": "SQLite",
+  "query": "DELETE FROM presentacion WHERE id_presentacion = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 1
+    },
+    "nullable": []
+  },
+  "hash": "657d16b3c530a23b7c0e6731b6e21f1a93df6cf054cb1a060decd9c6e570c27b"
+}
